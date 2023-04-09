@@ -1,29 +1,26 @@
 from account.models import Users, UserCredentials
-from common.services.email import EmailService
+from common.services.email.email import BaseEmailService
 
 
 class UserService:
     @staticmethod
-    def create_user(first_name, last_name, dob, email, password):
+    def create_user(user_id, first_name, last_name, dob, email, password):
         # creating entry in model
         user = Users.create_user(
-            first_name=first_name, last_name=last_name, dob=dob, email=email
+            user_id=user_id,
+            first_name=first_name,
+            last_name=last_name,
+            dob=dob,
+            email=email,
         )
         hashed_password = hash(password)
         # creating record in user credentials with verified =False
         UserCredentials.create_user_credentials(hashed_password=hashed_password)
         # trigger email
-        EmailService.trigger(email=email)
+        BaseEmailService.trigger(to_email=email, message=None, subject=None)
         return user
 
-    @staticmethod
-    def validate_otp(user_id, otp):
-        # validate otp from redis
-        otp_from_redis = 1234
-        if otp != otp_from_redis:
-            return False
-        UserCredentials.mark_verify(user_id=user_id)
-        return True
+
 
     @staticmethod
     def user_profile():
@@ -34,3 +31,11 @@ class UserService:
     def update_user():
         # update user profile
         pass
+
+    @staticmethod
+    def login_user(user_id, password):
+        hashed_password = hash(password)
+        user = UserCredentials.get_user_credential_by_id(user_id=user_id)
+        if user and user.hashed_password == hashed_password:
+            return True
+        return False

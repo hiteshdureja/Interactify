@@ -3,7 +3,7 @@ from common.models import BaseModel
 
 
 class Users(BaseModel):
-    id = models.IntegerField(primary_key=True)
+    user_id = models.TextField(primary_key=True)
     first_name = models.TextField(max_length=255)
     last_name = models.TextField(max_length=255)
     dob = models.DateField(null=False)
@@ -13,8 +13,12 @@ class Users(BaseModel):
         db_table = "users"
 
     @staticmethod
-    def create_user(first_name, last_name, dob, email):
+    def create_user(user_id, first_name, last_name, dob, email):
         user = Users.objects.create(
-            first_name=first_name, last_name=last_name, dob=dob, email=email
+            user_id=user_id,
+            first_name=first_name,
+            last_name=last_name,
+            dob=dob,
+            email=email,
         )
         return user

@@ -4,7 +4,7 @@ from account.models import Users
 
 
 class UserCredentials(BaseModel):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     user_id = models.ForeignKey(Users, on_delete=models.CASCADE)
     hashed_password = models.TextField(null=False)
     verified = models.BooleanField(default=False)
@@ -25,3 +25,7 @@ class UserCredentials(BaseModel):
         user_credentials.verified = True
         user_credentials.save()
         return user_credentials
+
+    @staticmethod
+    def get_user_credential_by_id(user_id):
+        return UserCredentials.objects.filter(user_id=user_id).first()
