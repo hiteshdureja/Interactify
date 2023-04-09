@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
-from account.services import UserService, UserCredentialService
+from account.services import UserCredentialService
 
 
 def otp_verification(request):

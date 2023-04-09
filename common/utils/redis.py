@@ -5,7 +5,10 @@ from redis import StrictRedis
 class RedisUtils:
     def __init__(self):
         self.node = StrictRedis(
-            host=settings.REDIS_HOST, port=settings.REDIS_PORT, db=settings.REDIS_DB, decode_responses=True
+            host=settings.REDIS_HOST,
+            port=settings.REDIS_PORT,
+            db=settings.REDIS_DB,
+            decode_responses=True,
         )
 
     def get_value_from_key(self, key):

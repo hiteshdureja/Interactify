@@ -16,11 +16,12 @@ class UserService:
         hashed_password = hash(password)
         # creating record in user credentials with verified =False
         UserCredentials.create_user_credentials(hashed_password=hashed_password)
-        # trigger email
+        # generate otp
+        from account.services.user_credential import UserCredentialService
+        generated_otp = UserCredentialService().generate_otp(user_id=user_id)
+        # trigger email and sent otp to generate email
         BaseEmailService.trigger(to_email=email, message=None, subject=None)
         return user
-
-
 
     @staticmethod
     def user_profile():

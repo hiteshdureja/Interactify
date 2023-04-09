@@ -9,12 +9,31 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import environ
+import os
+import sentry_sdk
 from pathlib import Path
+from sentry_sdk.integrations.django import DjangoIntegration
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env()
+env_file = "dev.env"
+env.read_env(os.path.join(BASE_DIR, env_file))
+
+ENABLE_SENTRY = env.bool("ENABLE_SENTRY", default=True)
+SENTRY_DSN = env.str("SENTRY_DSN")
+
+REDIS_HOST = env.str("REDIS_HOST")
+REDIS_PORT = env.int("REDIS_PORT")
+REDIS_DB = env.int("REDIS_DB")
+
+MYSQL_HOST = env.str("MYSQL_HOST")
+MYSQL_PASSWORD = env.str("MYSQL_PASSWORD")
+MYSQL_PORT = env.int("MYSQL_PORT")
+MYSQL_DB_NAME = env.str("MYSQL_DB_NAME")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -39,7 +58,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "common",
     "account",
+    "channels",
 ]
+
+ASGI_APPLICATION = 'interactify.asgi.application'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -82,6 +104,25 @@ DATABASES = {
     }
 }
 
+# Third party integrations
+# Sentry
+if ENABLE_SENTRY:
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        integrations=[
+            DjangoIntegration(),
+        ],
+        traces_sample_rate=1.0,
+        send_default_pii=True,
+    )
+
+
+EMAIL_BACKEND = "gmailapi_backend.mail.GmailBackend"
+GMAIL_API_CLIENT_ID = (
+    "867470506336-acrg7gt6u7q2ihd0tp23ldf3p5lvnpnb.apps.googleusercontent.com"
+)
+GMAIL_API_CLIENT_SECRET = "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"
+GMAIL_API_REFRESH_TOKEN = "refresh_token"
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
