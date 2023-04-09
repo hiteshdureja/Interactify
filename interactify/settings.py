@@ -58,10 +58,11 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "common",
     "account",
-    "channels",
+    "channels",  # app from python package django channels
+    "chat",
 ]
 
-ASGI_APPLICATION = 'interactify.asgi.application'
+ASGI_APPLICATION = "interactify.asgi.application"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
