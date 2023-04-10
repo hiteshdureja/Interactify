@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}
+    Chats
+{% endblock title %}
+{% block body %}
+    <p id="chat-history"></p>
+    <form id="send-message" method="post">
+        {% csrf_token %}
+        <label for="userId">User Id: </label><br>
+        <input type="text" id="user_id" name="user_id"><br>
+        <label for="msglable">Message</label><br>
+        <input type="text" id="message" name="message"><br>
+        <input type="submit" value="Send">
+    </form>
+    <div>
+{% endblock %}
+{% block js %}
+
+    {% load static %}
+    <script type="text/javascript" src="{% static 'js/communication.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/one_to_one_chat.js' %}"></script>
+{%  endblock %}

@@ -1,22 +1,26 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Interactify</title>
-
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="css/style.css">
-</head>
-<body>
-  <!-- nav -->
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="index.html">Interactify</a>
-      </div>
-    </div>
-  </nav>
+{#<!DOCTYPE html>#}
+{#<html>#}
+{#<head>#}
+{% extends 'base.html' %}
+{% block title %}
+    Interactify
+{% endblock title %}
+{#  <title>Interactify</title>#}
+{##}
+{#  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">#}
+{#  <link rel="stylesheet" type="text/css" href="css/style.css">#}
+{#</head>#}
+{#<body>#}
+{#  <!-- nav -->#}
+{#  <nav class="navbar navbar-default">#}
+{#    <div class="container-fluid">#}
+{#      <div class="navbar-header">#}
+{#        <a class="navbar-brand" href="index.html">Interactify</a>#}
+{#      </div>#}
+{#    </div>#}
+{#  </nav>#}
   <!-- ./nav -->
-
+{% block body %}
   <!-- main -->
   <main class="container">
   <h1 class="text-center">Welcome to Interactify! <br><small>A simple Facebook clone.</small></h1>
@@ -26,9 +30,9 @@
         <h4>Login to start enjoying unlimited fun!</h4>
 
         <!-- login form -->
-        <form method="post" action="home.html">
+        <form method="post" action="/account/login">
           <div class="form-group">
-            <input class="form-control" type="text" name="username" placeholder="Username">
+            <input class="form-control" type="text" name="user_id" placeholder="Username">
           </div>
 
           <div class="form-group">
@@ -67,15 +71,15 @@
     </div>
   </main>
   <!-- ./main -->
-
+{% endblock %}
   <!-- footer -->
-  <footer class="container text-center">
-    <ul class="nav nav-pills pull-right">
-      <li>FaceClone - Made by [your name here]</li>
-    </ul>
-  </footer>
-  <!-- ./footer -->
-  <script type="text/javascript" src="js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="js/script.js"></script>
-</body>
-</html>
+{#  <footer class="container text-center">#}
+{#    <ul class="nav nav-pills pull-right">#}
+{#      <li>FaceClone - Made by [your name here]</li>#}
+{#    </ul>#}
+{#  </footer>#}
+{#  <!-- ./footer -->#}
+{#  <script type="text/javascript" src="js/bootstrap.min.js"></script>#}
+{#  <script type="text/javascript" src="js/script.js"></script>#}
+{#</body>#}
+{#</html>#}

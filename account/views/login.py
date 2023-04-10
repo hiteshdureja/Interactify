@@ -11,6 +11,9 @@ def login(request):
     user_id = request_post.get("user_id")
     password = request_post.get("password")
 
+    if not user_id or not password:
+        return render(request, "account.html", {})
+
     user_logged_in = UserService.login_user(
         user_id=user_id,
         password=password,
@@ -27,4 +30,5 @@ def login(request):
                 ]
             },
         )
+
     return HttpResponseRedirect("/account/dashboard")

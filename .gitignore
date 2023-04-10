@@ -16,7 +16,7 @@ media
 
 # IntelliJ
 out/
-
+.DS_Store
 # JIRA plugin
 atlassian-ide-plugin.xml
 

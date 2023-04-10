@@ -11,9 +11,13 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import environ
 import os
+import pymysql
 import sentry_sdk
 from pathlib import Path
 from sentry_sdk.integrations.django import DjangoIntegration
+
+pymysql.version_info = (1, 3, 13, "final", 0)
+pymysql.install_as_MySQLdb()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -34,6 +38,7 @@ MYSQL_HOST = env.str("MYSQL_HOST")
 MYSQL_PASSWORD = env.str("MYSQL_PASSWORD")
 MYSQL_PORT = env.int("MYSQL_PORT")
 MYSQL_DB_NAME = env.str("MYSQL_DB_NAME")
+MYSQL_USER = env.str("MYSQL_USER")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -60,10 +65,18 @@ INSTALLED_APPS = [
     "account",
     "channels",  # app from python package django channels
     "chat",
+    "news_feed",
 ]
-
 ASGI_APPLICATION = "interactify.asgi.application"
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [(REDIS_HOST, REDIS_PORT)],
+        },
+    },
+}
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -75,11 +88,16 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "interactify.urls"
-
+APPEND_SLASH = False
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [
+            os.path.join(BASE_DIR, "common/templates"),
+            os.path.join(BASE_DIR, "chat/templates"),
+            os.path.join(BASE_DIR, "news_feed/templates"),
+            os.path.join(BASE_DIR, "account/templates"),
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -99,9 +117,13 @@ WSGI_APPLICATION = "interactify.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': MYSQL_DB_NAME,
+        'USER': MYSQL_USER,
+        'PASSWORD': MYSQL_PASSWORD,
+        'HOST': MYSQL_HOST,
+        'PORT': MYSQL_PORT,
     }
 }
 
@@ -159,7 +181,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
