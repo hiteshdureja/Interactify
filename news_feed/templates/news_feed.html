@@ -11,8 +11,11 @@
         <!-- profile brief -->
         <div class="panel panel-default">
           <div class="panel-body">
-            <h4>nicholaskajoh</h4>
-            <p>I love to code!</p>
+            <h4>Friends</h4>
+              {% for user in users %}
+                <a>{{ user.user_id }}</a><br>
+              {% endfor %}
+
           </div>
         </div>
         <!-- ./profile brief -->
@@ -36,13 +39,20 @@
         <div>
           <!-- post -->
             {% for post in feed %}
-          <div class="panel panel-default">
+          <div class="panel panel-default" name={{ post.feed_id }}>
+
+
             <div class="panel-body">
               <p>{{ post.feed_text }}</p>
             </div>
             <div class="panel-footer">
               <span> posted at {{ post.created_at }} by {{ post.user_id.user_id }} </span>
-              <span class="pull-right"><a class="text-danger" href="#">[Like]</a></span>
+              <span class="pull-right">
+                  <form action="likes/">
+                      <input type="hidden" id="feed_id" name="feed_id" value={{ post.feed_id }}>
+                      <input type="submit" name="like" id="like" value="Like" >
+                  </form>
+              </span>
             </div>
           </div>
             {% endfor %}

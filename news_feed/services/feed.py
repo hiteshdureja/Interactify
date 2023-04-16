@@ -16,3 +16,7 @@ class FeedService:
     def get_feed():
         feed = NewsFeed.get_feed()
         return feed
+
+    @staticmethod
+    def like_feed(feed_id):
+        return NewsFeed.like_feed(feed_id)

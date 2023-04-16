@@ -20,3 +20,8 @@ class Users(BaseModel):
             email=email,
         )
         return user
+
+    @staticmethod
+    def get_users():
+        users = Users.objects.all()
+        return users
