@@ -66,9 +66,11 @@ INSTALLED_APPS = [
     "channels",  # app from python package django channels
     "chat",
     "news_feed",
+    "corsheaders",
 ]
 ASGI_APPLICATION = "interactify.asgi.application"
 
+CORS_ORIGIN_ALLOW_ALL = True
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
@@ -78,6 +80,7 @@ CHANNEL_LAYERS = {
     },
 }
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -117,13 +120,13 @@ WSGI_APPLICATION = "interactify.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': MYSQL_DB_NAME,
-        'USER': MYSQL_USER,
-        'PASSWORD': MYSQL_PASSWORD,
-        'HOST': MYSQL_HOST,
-        'PORT': MYSQL_PORT,
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": MYSQL_DB_NAME,
+        "USER": MYSQL_USER,
+        "PASSWORD": MYSQL_PASSWORD,
+        "HOST": MYSQL_HOST,
+        "PORT": MYSQL_PORT,
     }
 }
 
