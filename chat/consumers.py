@@ -6,6 +6,7 @@ class SocketConsumer(AsyncWebsocketConsumer):
     group_name = "hittu-akky"
 
     async def connect(self):
+        print(self.scope)
         await self.channel_layer.group_add(self.group_name, self.channel_name)
         await self.accept()
 

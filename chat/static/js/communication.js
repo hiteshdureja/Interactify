@@ -8,12 +8,7 @@ chatSocket.onclose = function (e) {
 };
 chatSocket.onmessage = function (message) {
     const messageJson = JSON.parse(message.data);
-
-
     const chatHistory = document.getElementById("chat-history");
-
-    console.log(message);
-
     if(messageJson.message_text)
         chatHistory.innerHTML += messageJson.user_id + ": " + messageJson.message_text + "<br/>";
 };
