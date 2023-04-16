@@ -1,9 +1,8 @@
 from django.urls import path
-
-from account.views import signup, login, otp_verification
+from account.views import index, otp_verification, logout
 
 urlpatterns = [
-    path("signup", signup),
-    path("login", login),
+    path("", index),
+    path("logout/", logout),
     path("otp/verify", otp_verification),
 ]

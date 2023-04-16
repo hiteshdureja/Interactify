@@ -4,18 +4,19 @@ from common.services.email.email import BaseEmailService
 
 class UserService:
     @staticmethod
-    def create_user(user_id, first_name, last_name, dob, email, password):
+    def create_user(user_id, first_name, last_name, email, password):
         # creating entry in model
         user = Users.create_user(
             user_id=user_id,
             first_name=first_name,
             last_name=last_name,
-            dob=dob,
             email=email,
         )
-        hashed_password = hash(password)
+        hashed_password = password
         # creating record in user credentials with verified =False
-        UserCredentials.create_user_credentials(hashed_password=hashed_password)
+        UserCredentials.create_user_credentials(
+            user_id=user_id, hashed_password=hashed_password
+        )
         # generate otp
         from account.services.user_credential import UserCredentialService
 
@@ -36,7 +37,7 @@ class UserService:
 
     @staticmethod
     def login_user(user_id, password):
-        hashed_password = hash(password)
+        hashed_password = password
         user = UserCredentials.get_user_credential_by_id(user_id=user_id)
         if user and user.hashed_password == hashed_password:
             return True

@@ -10,9 +10,9 @@ def otp_verification(request):
     if not len(request_post):
         return render(request, TEMPLATE_OTP_VERIFICATION, {})
     otp = request_post.get("otp")
-    user_id = request_post.get("user_id")
-    validated = UserCredentialService.validate_otp(user_id=user_id, otp=otp)
-    if not validated:
+    user_id = request.session["user_id"]
+    user_credential_service = UserCredentialService()
+    if not user_credential_service.validate_otp(user_id=user_id, otp=otp):
         return render(
             request,
             TEMPLATE_OTP_VERIFICATION,
@@ -25,4 +25,6 @@ def otp_verification(request):
                 ]
             },
         )
-    return HttpResponseRedirect("/account/dashboard")
+
+    request.session["user_id"] = user_id
+    return HttpResponseRedirect("/feed/")
