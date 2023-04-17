@@ -24,11 +24,11 @@
       </div>
       <div class="col-md-6">
         <!-- post form -->
-        <form method="post" action="/feed/">
+        <form id="send_feed" name="send_feed" method="post" action="/feed/">
           {% csrf_token %}
           <div class="input-group">
-              <input class="user_id" type="hidden" name="user_id" value={{ user_id }}>
-              <input class="form-control" type="text" name="feed_text" placeholder="Make a post...">
+              <input class="user_id" type="hidden" name="user_id" id="user_id" value={{ user_id }}>
+              <input class="form-control" type="text" name="feed_text" id="feed_text" placeholder="Make a post...">
               <span class="input-group-btn">
               <button class="btn btn-success" type="submit" name="post">Post</button>
             </span>
@@ -66,3 +66,8 @@
   </main>
   <!-- ./main -->
 {% endblock %}
+
+{% block js %}
+{% load static %}
+    <script type="text/javascript" src="{% static 'js/notification.js' %}"></script>\
+{%  endblock %}

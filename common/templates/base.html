@@ -16,16 +16,31 @@
         <a class="navbar-brand" href="/feed/">Interactify</a>
       </div>
         {% block navlinks %}
+
               <ul class="nav navbar-nav navbar-right">
+
+                <li><input type="submit" value="Notification" onclick="toggle()"></li>
                 <li><a href="/feed/">Home</a></li>
-                <li><a href="">Notifications</a></li>
                 <li><a id="logout" href="/logout/">Logout</a></li>
               </ul>
         {% endblock %}
     </div>
   </nav>
   <!-- ./nav -->
+<div id="notificationDiv" style="display: none">
+ hitesh
+</div>
+  <script>
+  function toggle(e) {
+    let element = document.getElementById("notificationDiv");
 
+    if ( element.style.display === "none") {
+       element.style.display="block";
+    } else {
+       element.style.display="none";
+    }
+  }
+</script>
   <!-- main -->
  {% block body %}
   {% endblock %}
