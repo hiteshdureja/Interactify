@@ -6,7 +6,9 @@
         {{ block.super }}
     {% endif %}
 {% endblock %}
-
+<script>
+    const chatSocket = new WebSocket("ws://" + window.location.host + "/");
+</script>
 {% block title %}
     Interactify
 {% endblock title %}
@@ -78,9 +80,3 @@
   </main>
   <!-- ./main -->
 {% endblock %}
-
-
-{% block js %}
-    {% load static %}
-    <script type="text/javascript" src="{% static 'js/login.js' %}"></script>
-{%  endblock %}

@@ -49,7 +49,7 @@ SECRET_KEY = "django-insecure-5gg4n_54)4b*t-u(eb3+^7abfd_6mc3v5k-qoo)z2n%3o2&%02
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["3d2f-45-252-79-195.ngrok-free.app", "localhost"]
 
 
 # Application definition
@@ -143,12 +143,20 @@ if ENABLE_SENTRY:
     )
 
 
-EMAIL_BACKEND = "gmailapi_backend.mail.GmailBackend"
-GMAIL_API_CLIENT_ID = (
-    "867470506336-acrg7gt6u7q2ihd0tp23ldf3p5lvnpnb.apps.googleusercontent.com"
-)
-GMAIL_API_CLIENT_SECRET = "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"
-GMAIL_API_REFRESH_TOKEN = "refresh_token"
+# EMAIL_BACKEND = "gmailapi_backend.mail.GmailBackend"
+# GMAIL_API_CLIENT_ID = (
+#     "867470506336-acrg7gt6u7q2ihd0tp23ldf3p5lvnpnb.apps.googleusercontent.com"
+# )
+# GMAIL_API_CLIENT_SECRET = "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"
+# GMAIL_API_REFRESH_TOKEN = "refresh_token"
+
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST = "smtp-mail.outlook.com"
+EMAIL_HOST_USER = "helpdesk.interactify@outlook.com"
+EMAIL_HOST_PASSWORD = "abc19012003"
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

@@ -13,11 +13,11 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "interactify.settings")
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
 from django.core.asgi import get_asgi_application
-from chat import urls
+from interactify.urls import web_socket_url_patterns
 
 application = ProtocolTypeRouter(
     {
         "http": get_asgi_application(),
-        "websocket": AuthMiddlewareStack(URLRouter(urls.web_socket_url_patterns)),
+        "websocket": AuthMiddlewareStack(URLRouter(web_socket_url_patterns)),
     }
 )

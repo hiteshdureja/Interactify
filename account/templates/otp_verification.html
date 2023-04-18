@@ -17,6 +17,7 @@
      <div class="col-md-4" style="">
          <form id="otp_verification" method="post" action="/otp/verify">
                 {% csrf_token %}
+              <input type="hidden" value={{ user_id }}>
               <div class="form-group">
                   <label  for="OTP">Enter OTP: </label><br>
                 <input class="form-control" type="text" id="otp" name="otp" ><br>

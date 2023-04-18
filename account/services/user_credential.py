@@ -23,8 +23,6 @@ class UserCredentialService:
         # validate otp from redis
         key = self.get_otp_key(user_id=user_id)
         otp_from_redis = self.redis.get_value_from_key(key=key)
-        print(key)
-        print(otp_from_redis)
         if otp != otp_from_redis:
             return False
         UserCredentials.mark_verify(user_id=user_id)

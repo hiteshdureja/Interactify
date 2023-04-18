@@ -4,6 +4,9 @@ from account.services import UserService
 
 
 def index(request):
+    user_id = request.session.get("user_id")
+    if user_id:
+        return HttpResponseRedirect("/feed/")
     request_post = request.POST
     if not request_post:
         return render(request, "index.html", {"user_logged_in": False})

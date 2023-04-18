@@ -24,6 +24,8 @@ atlassian-ide-plugin.xml
 *.py[cod]
 *$py.class
 
+*dev.env
+migrations
 # Distribution / packaging
 .Python build/
 develop-eggs/
@@ -46,7 +48,6 @@ wheels/
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
-
 # Unit test / coverage reports
 htmlcov/
 .tox/
