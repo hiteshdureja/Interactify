@@ -3,20 +3,18 @@
     Chats
 {% endblock title %}
 {% block body %}
+    <div class="col-md-3" style="height: 200px">
+
+    </div>
     <h3>Chat History</h3><br>
     <p id="chat-history"></p>
+    <div class="col-md-6">
     <form id="send-message" method="post">
         {% csrf_token %}
         <input type="hidden" id="user_id" name="user_id" value= {{ user_id }} ><br>
         <label for="msglable">Message</label><br>
-        <input type="text" id="message" name="message"><br>
-        <input type="submit" value="Send">
+        <input class="form-control" type="text" id="message" name="message" placeholder="Write your message..."><br>
+        <input class="btn btn-success" type="submit" value="Send">
     </form>
-    <div>
+    </div>
 {% endblock %}
-{% block js %}
-
-    {% load static %}
-    <script type="text/javascript" src="{% static 'js/communication.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/one_to_one_chat.js' %}"></script>
-{%  endblock %}
