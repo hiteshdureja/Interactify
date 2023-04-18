@@ -21,9 +21,14 @@ def news_feed(request):
         feed = FeedService.get_feed()
 
         feed = feed[::-1]
-        return render(request, NEWS_FEEDS, {"feed": feed,
-                                            "users": users,
-                                            })
+        return render(
+            request,
+            NEWS_FEEDS,
+            {
+                "feed": feed,
+                "users": users,
+            },
+        )
 
     FeedService.create_feed(
         user_id=user_id,
@@ -32,8 +37,6 @@ def news_feed(request):
     feed = FeedService.get_feed()
     users = Users.get_users()
     feed = feed[::-1]
-    return render(request, NEWS_FEEDS, {
-        "feed": feed,
-        "users": users,
-        "user_id": user_id
-    })
+    return render(
+        request, NEWS_FEEDS, {"feed": feed, "users": users, "user_id": user_id}
+    )

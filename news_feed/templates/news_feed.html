@@ -8,12 +8,11 @@
   <main class="container">
     <div class="row">
       <div class="col-md-3">
-        <!-- profile brief -->
         <div class="panel panel-default">
           <div class="panel-body">
             <h4>Friends</h4>
               {% for user in users %}
-                <a>{{ user.user_id }}</a><br>
+                <a href="/chat/{{ user.user_id }}">{{ user.user_id }}</a><br>
               {% endfor %}
 
           </div>
