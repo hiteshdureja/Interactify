@@ -193,6 +193,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = "/static/"
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "chat/static"),
+    os.path.join(BASE_DIR, "common/static"),
+    os.path.join(BASE_DIR, "news_feed/static")
+)
+
 
 
 # Default primary key field type
