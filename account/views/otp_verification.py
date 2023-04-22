@@ -10,7 +10,7 @@ def otp_verification(request):
     if not len(request_post):
         return render(request, TEMPLATE_OTP_VERIFICATION, {})
     otp = request_post.get("otp")
-    user_id = request_post.get("user_id")
+    user_id = request.session.get('user_id_to_verify')
     user_credential_service = UserCredentialService()
     if not user_credential_service.validate_otp(user_id=user_id, otp=otp):
         return render(

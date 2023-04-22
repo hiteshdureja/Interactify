@@ -2,12 +2,12 @@
 {#<header></header>#}
 {% extends "base.html" %}
 {% block title %}
-    OTP Verificaton
+    OTP Verification
 {% endblock title %}
 <!-- This page should be able to use common static (css & JS) files -->
 {#<body>#}
 {% block navlinks %}
-    {% if user_logged_in %}
+    {% if user_logged_in %} <!-- hiding nav bar if user is not logged in -->
         {{ block.super }}
     {% endif %}
 {% endblock %}
@@ -15,9 +15,8 @@
      <div class="col-md-4">
      </div>
      <div class="col-md-4" style="">
-         <form id="otp_verification" method="post" action="/otp/verify">
-                {% csrf_token %}
-              <input type="hidden" value={{ user_id }}>
+         <form id="otp_verification" method="post" action="/otp/verify"> <!-- why this form action to otp verify -->
+             {% csrf_token %}
               <div class="form-group">
                   <label  for="OTP">Enter OTP: </label><br>
                 <input class="form-control" type="text" id="otp" name="otp" ><br>

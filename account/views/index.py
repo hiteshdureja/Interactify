@@ -65,5 +65,7 @@ def index(request):
         email=email,
         password=password,
     )
+
+    request.session['user_id_to_verify'] = user_id
     # redirect to otp validation screen
     return HttpResponseRedirect("/otp/verify")

@@ -21,8 +21,9 @@ class UserService:
         from account.services.user_credential import UserCredentialService
 
         generated_otp = UserCredentialService().generate_otp(user_id=user_id)
+        message = f"Hello {first_name}! Your OTP for account verification is {generated_otp}."
         # trigger email and sent otp to generate email
-        BaseEmailService.trigger(to_email=email, message=None, subject=None)
+        BaseEmailService.trigger(to_email=email, message=message, subject="Interactify | Account Verification")
         return user
 
     @staticmethod

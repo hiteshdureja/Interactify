@@ -3,5 +3,5 @@ sendFeed.onsubmit= function (e) {
     const feedMessage = window.socket
     const feedText=document.getElementById("feed_text");
     feedMessage.send(JSON.stringify({"type": "notification.message", "feed_text": feedText.value}));
-    feedText.value = "";
+    window.location.href = "/";
 };

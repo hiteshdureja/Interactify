@@ -14,8 +14,8 @@ def news_feed(request):
         return HttpResponseRedirect("/")
 
     request_post = request.POST
+    print(request.POST)
     feed_text = request_post.get("feed_text")
-
     if not user_id or not feed_text:
         users = Users.get_users()
         feed = FeedService.get_feed()

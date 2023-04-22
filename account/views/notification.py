@@ -1,2 +1,0 @@
-def notification(request):
-    pass

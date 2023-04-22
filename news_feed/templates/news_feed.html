@@ -23,7 +23,7 @@
       </div>
       <div class="col-md-6">
         <!-- post form -->
-        <form id="send_feed" name="send_feed" method="post" action="/feed/">
+        <form id="send_feed" name="send_feed" method="post" action="{% url 'feed' %}">
           {% csrf_token %}
           <div class="input-group">
               <input class="user_id" type="hidden" name="user_id" id="user_id" value={{ user_id }}>
@@ -64,9 +64,9 @@
     </div>
   </main>
   <!-- ./main -->
-{% endblock %}
+{% endblock %}1
 
 {% block js %}
 {% load static %}
-    <script type="text/javascript" src="{% static 'js/notification.js' %}"></script>\
+    <script type="text/javascript" src="{% static 'js/notification.js' %}"></script>
 {%  endblock %}
