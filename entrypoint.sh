@@ -36,8 +36,14 @@ fi
 echo "Starting gunicorn server..."
 
 gunicorn interactify.asgi:application \
-    --config ./gunicorn/config.py \
-    --access-logfile /var/log/gunicorn/gunicorn-access.log \
-    --error-logfile /var/log/gunicorn/gunicorn-error.log
+  --timeout 60 --bind 0.0.0.0:80 --workers 3 \
+  --worker-class uvicorn.workers.UvicornWorker \
+  --access-logfile /var/log/gunicorn/gunicorn-access.log \
+  --error-logfile /var/log/gunicorn/gunicorn-error.log
+
+#gunicorn interactify.asgi:application \
+#    --config ./gunicorn/config.py \
+#    --access-logfile /var/log/gunicorn/gunicorn-access.log \
+#    --error-logfile /var/log/gunicorn/gunicorn-error.log
 
 echo "Server started at port 80..."

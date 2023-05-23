@@ -5,5 +5,6 @@ RUN apt-get update && apt-get install build-essential iputils-ping -y
 RUN chmod +x *.sh
 RUN pip install -r requirements.txt
 ENTRYPOINT ["/app/entrypoint.sh"]
+EXPOSE 80
 
 

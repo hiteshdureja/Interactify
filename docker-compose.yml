@@ -33,4 +33,9 @@ services:
       - 80:80
     depends_on:
       - backend
-
+  backend-ci-cd:
+    image: jenkins/jenkins:lts
+    environment:
+      - JENKINS_OPTS=--httpPort=8080
+    depends_on:
+      - backend
