@@ -7,7 +7,7 @@
     {% endif %}
 {% endblock %}
 <script>
-    const chatSocket = new WebSocket("ws://" + window.location.host + "/");
+    const chatSocket = new WebSocket("wss://localhost/");
 </script>
  {% block title %}
     Interactify

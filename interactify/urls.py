@@ -15,17 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include, re_path
-
 from chat.consumers import SocketConsumer
+from django.conf import settings
+from django.conf.urls.static import static
 
 web_socket_url_patterns = [
     path("", SocketConsumer.as_asgi()),
-    # re_path(r'(?P<user_id>\d+)/$', SocketConsumer.as_asgi()),
 ]
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
     path("", include("account.urls")),
     path("chat/", include("chat.urls")),
     path("feed/", include("news_feed.urls")),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,4 +1,4 @@
-const chatSocket = new WebSocket("ws://" + window.location.host + "/");   // socket client created by creating object of web socket
+const chatSocket = new WebSocket("wss://localhost/");   // socket client created by creating object of web socket
 window.socket = chatSocket     // socket client made global
 chatSocket.onopen = function (e) {
     console.log("The connection was setup successfully !");

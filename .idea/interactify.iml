@@ -19,7 +19,7 @@
       <excludeFolder url="file://$MODULE_DIR$/account/migrations" />
       <excludeFolder url="file://$MODULE_DIR$/news_feed/migrations" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.10 (interactify)" jdkType="Python SDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PyDocumentationSettings">
