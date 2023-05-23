@@ -1,0 +1,10 @@
+[Unit]
+Description=Interactify Gunicorn Config
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/interactify
+ExecStart=sudo /home/ubuntu/interactify/env/bin/gunicorn interactify.asgi:application --timeout 60 --bind 0.0.0.0:80 --workers 3 --worker-class uvicorn.workers.UvicornWorker --access-logfile /var/log/gunicorn/gunicorn-access.log --error-logfile /var/log/gunicorn/gunicorn-error.log
