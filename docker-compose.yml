@@ -1,0 +1,36 @@
+services:
+  backend:
+    restart: on-failure
+    image: interactify:latest
+    depends_on:
+      - backend-db
+      - backend-cache
+    env_file: dev.env
+    environment:
+      - MYSQL_DB_NAME=${DB}
+      - DJANGO_SETTINGS_MODULE=interactify.settings
+    volumes:
+      - ./gunicorn:/etc/gunicorn
+  backend-db:
+    restart: always
+    image: mysql:latest
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+      - MYSQL_DATABASE=${DB}
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+  backend-cache:
+    image: redis:latest
+  backend-server:
+    image: nginx:latest
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    ports:
+      - 80:80
+    depends_on:
+      - backend
+
