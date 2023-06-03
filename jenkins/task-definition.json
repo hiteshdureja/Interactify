@@ -1,0 +1,58 @@
+{
+    "family": "interactify-family",
+    "executionRoleArn": "arn:aws:iam::617346611291:role/ecsTaskExecutionRole",
+    "containerDefinitions": [
+        {
+            "name": "backend",
+            "image": "interactify:latest",
+            "memory": 400,
+            "dependsOn": [
+                {"containerName": "backend-db", "condition": "START"},
+                {"containerName": "backend-cache", "condition": "START"}
+            ],
+            "environmentFiles": [
+                {"value": "s3://interactify-environment-files/dev.env", "type": "s3"}
+            ],
+            "environment": [
+                {"name": "MYSQL_DB_NAME", "value": "interactify"},
+                {"name": "DJANGO_SETTINGS_MODULE", "value": "interactify.settings"}
+            ],
+            "mountPoints": [{"sourceVolume": "gunicorn", "containerPath": "/etc/gunicorn"}]
+        },
+        {
+            "name": "backend-db",
+            "memory": 200,
+            "image": "mysql:latest",
+            "environment": [
+                {"name": "MYSQL_ALLOW_EMPTY_PASSWORD", "value": "1"},
+                {"name": "MYSQL_DATABASE", "value": "interactify"}
+            ],
+            "mountPoints": [
+                {
+                    "sourceVolume": "mysql-data",
+                    "containerPath": "/var/lib/mysql"
+                }
+            ],
+            "healthCheck": {
+                "command": ["CMD", "mysqladmin", "ping", "-h", "localhost"],
+                "interval": 10,
+                "timeout": 20,
+                "retries": 10
+            }
+        },
+        {"image": "redis:latest", "name": "backend-cache", "memory": 100},
+        {
+            "name": "backend-server",
+            "memory": 200,
+            "image": "nginx:latest",
+            "mountPoints": [{"sourceVolume": "nginx", "containerPath": "/etc/nginx/conf.d"}],
+            "portMappings": [{"containerPort": 80, "hostPort": 80, "protocol": "tcp"}],
+            "dependsOn": [{"containerName": "backend", "condition": "START"}]
+        }
+    ],
+    "volumes": [
+      {"name": "nginx", "host": {"sourcePath": "/var/jenkins_home/workspace/interactify/interactify/nginx"}},
+      {"name": "mysql-data", "host": {"sourcePath": "/var/jenkins_home/workspace/interactify/interactify/mysql-data"}},
+      {"name": "gunicorn", "host": {"sourcePath": "/var/jenkins_home/workspace/interactify/interactify/gunicorn"}}
+    ]
+}

@@ -1,0 +1,7 @@
+{
+    "cluster": "default",
+    "service": "interactify",
+    "desiredCount": 1,
+    "taskDefinition": "",
+    "forceNewDeployment": true
+}

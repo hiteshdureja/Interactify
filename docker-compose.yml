@@ -34,8 +34,10 @@ services:
     depends_on:
       - backend
   backend-ci-cd:
-    image: jenkins/jenkins:lts
-    environment:
-      - JENKINS_OPTS=--httpPort=8080
+    image: custom-jenkins:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 8080:8080
     depends_on:
       - backend

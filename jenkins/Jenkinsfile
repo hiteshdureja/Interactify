@@ -1,0 +1,66 @@
+def accessKey = "AKIAY7PFZXBNXZF5FFIP"
+def secretKey = "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"
+def regionName = "ap-southeast-1"
+def serviceName = "interactify"
+def taskDefinitionFile = "jenkins/task-definition.json"
+def deployConfig = "jenkins/deploy-config.json"
+def accountId = "617346611291"
+def dockerHost = "${accountId}.dkr.ecr.${regionName}.amazonaws.com"
+
+617346611291.dkr.ecr.ap-southeast-1.amazonaws.com
+properties([pipelineTriggers([githubPush()])])
+pipeline {
+    agent any
+    stages {
+        stage("Source Code Management") {
+            steps {
+                withCredentials([gitUsernamePassword(credentialsId: "ea479973-5457-4925-87fb-59309e7aa052")]) {
+                    script {
+                        def destinationDir = "./interactify"
+                        if (!fileExists(destinationDir)) {
+                            sh "git clone https://github.com/hiteshdureja/interactify"
+                        }
+                        else {
+                            sh "cd ./interactify && git checkout . && git pull origin master"
+                        }
+                    }
+                }
+            }
+        }
+        stage("Docker Build") {
+            steps {
+                sh "cd ./interactify && docker build -t ${serviceName}:latest ."
+            }
+        }
+        stage("Push environment file to S3"){
+            steps {
+                sh "aws configure set region ${regionName}"
+                sh "aws configure set aws_access_key_id ${accessKey}"
+                sh "aws configure set aws_secret_access_key ${secretKey}"
+                sh "cd ./interactify && aws s3 cp dev.env s3://interactify-environment-files"
+            }
+        }
+        stage("Docker Push") {
+            steps {
+                sh "aws configure set region ${regionName}"
+                sh "aws configure set aws_access_key_id ${accessKey}"
+                sh "aws configure set aws_secret_access_key ${secretKey}"
+                sh "docker login -u AWS -p \$(aws ecr get-login-password --region ${regionName}) ${dockerHost}"
+                sh "docker tag ${serviceName}:latest ${dockerHost}/${serviceName}:latest"
+                sh "docker push ${dockerHost}/${serviceName}:latest"
+            }
+        }
+        stage('Docker Cleanup') {
+            steps {
+                sh "docker system prune -f"
+                sh """docker images | grep """ + serviceName + """ | awk '{print \$1":"\$2}' | xargs docker rmi"""
+            }
+        }
+        stage("Deploy") {
+            steps {
+                sh "aws ecs register-task-definition --cli-input-json file://${taskDefinitionFile}"
+                sh "aws ecs update-service --cli-input-json file://${deployConfig}"
+            }
+        }
+    }
+}

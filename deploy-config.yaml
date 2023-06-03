@@ -1,5 +1,0 @@
-cluster: 'default'
-service: 'interactify' # [REQUIRED] The name of the service to update.
-desiredCount: 1
-taskDefinition: ''
-forceNewDeployment: true

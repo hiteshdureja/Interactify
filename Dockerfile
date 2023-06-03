@@ -6,5 +6,3 @@ RUN chmod +x *.sh
 RUN pip install -r requirements.txt
 ENTRYPOINT ["/app/entrypoint.sh"]
 EXPOSE 80
-
-
